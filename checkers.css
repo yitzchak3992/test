@@ -1,0 +1,46 @@
+
+#board{
+    display: grid; 
+    grid-template-columns: repeat(8, 1fr);
+    grid-template-rows: repeat(8, 1fr);
+    width:600px;
+    height:600px;
+}
+.white{
+    background-color: rgb(241, 22, 22);
+}
+.black{
+    background-color: rgb(249, 249, 249);
+    /* background-color: black; */
+} 
+.imageContainer {
+    width: 100%;
+    height: 100%;
+}
+/* .square img{
+    max-width: 100%;
+    height: auto;
+    border-radius: 50%;
+} */
+.pieceBlack{
+    background-image: url( "imeg/checker piece1.jpeg");
+    background-size: contain;
+
+}
+.pieceRed{
+    background-image:url( "imeg/checker piece2.jpeg");
+    background-size: contain;
+    border-radius: 50%;
+    clip-path: circle(50%);
+
+    /* -moz-border-radius: 50%;
+  border-radius: 50%; */
+  /* border: none; */
+
+}
+.options{
+    background-color: rgba(0, 255, 255, 0.557);
+}
+.CanMove:hover{
+    background-color: rgba(0, 255, 255, 0.557);
+}
