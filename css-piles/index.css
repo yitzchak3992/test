@@ -65,3 +65,10 @@ span.psw {
      width: 100%;
   }
 }
+#integrityWarning{
+  display: none;
+  color: #f44336;
+  background-color: #e7e6e6;
+  font-size: larger;
+
+}
