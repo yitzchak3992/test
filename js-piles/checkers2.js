@@ -79,11 +79,17 @@ function whoCanMove(e) {
     if (dataGame[i][j] === 0 || dataGame[i][j] === -1) return;
     ClickOnIt = e.target;
   } else {
-    if (possibleGetThere.some((arr) => arr[0] === i && arr[1] === j)) {
+    const getThere = possibleGetThere.find(
+      (arr) => arr[0] === i && arr[1] === j
+    );
+    if (getThere) {
       iSource = ClickOnIt.getAttribute("i");
       jSource = ClickOnIt.getAttribute("j");
       dataGame[i][j] = dataGame[iSource][jSource];
       dataGame[iSource][jSource] = 0;
+      for (let k = 0; k < getThere[2].length; k += 2) {
+        dataGame[getThere[2][k]][getThere[2][k + 1]] = 0;
+      }
       redTurn = !redTurn;
       arrangeScreen();
     }
@@ -105,11 +111,78 @@ function whoCanMove(e) {
   let CanMove = false;
   if (dataGame[i + row][j - 1] === 0) {
     CanMove = true;
-    possibleGetThere.push([i + row, j - 1]);
+    possibleGetThere.push([i + row, j - 1, []]);
   }
   if (dataGame[i + row][j + 1] == 0) {
     CanMove = true;
-    possibleGetThere.push([i + row, j + 1]);
+    possibleGetThere.push([i + row, j + 1, []]);
+  }
+  eatEnemy(i, j, row);
+  function eatEnemy(i, j, row) {
+    let enemy;
+    if (redTurn) {
+      enemy = 1;
+    } else {
+      enemy = 2;
+    }
+    // Checks if there is an enemy on the left side
+    if (
+      dataGame[i + row][j - 1] == enemy ||
+      dataGame[i + row][j - 1] == enemy * 10
+    ) {
+      //hecks if there is a free space after the enemy
+      if (dataGame[i + row + row][j - 2] == 0) {
+        // Checking if this is the first enemy he eats or if it is the second or more
+        if (
+          possibleGetThere[possibleGetThere.length - 1][0] === i &&
+          possibleGetThere[possibleGetThere.length - 1][1] === j
+        ) {
+          possibleGetThere.push([
+            i + row + row,
+            j - 2,
+            [...possibleGetThere[possibleGetThere.length - 1][2]].push(
+              i + row,
+              j - 1
+            ),
+          ]);
+        }
+        // this is the first enemy he eats
+        else {
+          possibleGetThere.push([i + row + row, j - 2, [i + row, j - 1]]);
+        }
+        // Recursive call to check if it is possible to eat another enemy
+        eatEnemy(i + row + row, j - 2, row);
+      }
+    }
+    // Checks if there is an enemy on the right side
+    if (
+      dataGame[i + row][j + 1] == enemy ||
+      dataGame[i + row][j + 1] == enemy * 10
+    ) {
+      //hecks if there is a free space after the enemy
+      if (dataGame[i + row + row][j + 2] == 0) {
+        // Checking if this is the first enemy he eats or if it is the second or more
+        if (
+          possibleGetThere[possibleGetThere.length - 1][0] === i &&
+          possibleGetThere[possibleGetThere.length - 1][1] === j
+        ) {
+          possibleGetThere.push([
+            i + row + row,
+            j + 2,
+            [...possibleGetThere[possibleGetThere.length - 1][2]].push(
+              i + row,
+              j + 1
+            ),
+          ]);
+        }
+        // this is the first enemy he eats
+        else {
+          possibleGetThere.push([i + row + row, j + 2, [i + row, j + 1]]);
+        }
+        // Recursive call to check if it is possible to eat another enemy
+        eatEnemy(i + row + row, j + 2, row);
+      }
+    }
   }
 
   lightOptions();

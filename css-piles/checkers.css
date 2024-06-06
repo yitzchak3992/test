@@ -23,12 +23,12 @@
     border-radius: 50%;
 } */
 .pieceBlack{
-    background-image: url( "imeg/checker piece1.jpeg");
+    background-image: url( "/imeg/checker piece1.jpeg");
     background-size: contain;
 
 }
 .pieceRed{
-    background-image:url( "imeg/checker piece2.jpeg");
+    background-image:url( "/imeg/checker piece2.jpeg");
     background-size: contain;
     border-radius: 50%;
     clip-path: circle(50%);
@@ -44,3 +44,13 @@
 .CanMove:hover{
     background-color: rgba(0, 255, 255, 0.557);
 }
+button {
+    background-color: #faf205;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 600px;
+  }
+  
